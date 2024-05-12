@@ -13,6 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+use function PHPSTORM_META\map;
+
 #[Route('/admin')]
 class AdminController extends AbstractController
 {
@@ -52,17 +54,57 @@ class AdminController extends AbstractController
                 'teachersStatistics' => $teachersStatistics
             ]);
     }
-    // #[Route('/students/{id<\d+>}', name: 'admin_students')]
-    // public function studentsListAdmin(Admin $admin): Response
-    // {
-    //     $studentsList=$this->studentRepository->findAll();
-    //     dd($studentsList);
-    //     return $this->render('admin/studentsList.html.twig',
-    //         [
-    //             'admin' => $admin , 
-    //             'studentsList' => $studentsList
-    //         ]);
-    // }
+    #[Route('/students/{id<\d+>}', name: 'admin_students')]
+    public function studentsListAdmin(Admin $admin): Response
+    {
+        $studentsList=$this->studentRepository->findAll();
+        $studentsList=array_map(function($student){
+            return $student->toArray();
+        },$studentsList);
+        return $this->render('admin/studentsList.html.twig',
+            [
+                'admin' => $admin , 
+                'students' => $studentsList
+            ]);
+    }
+    #[Route('/teachers/{id<\d+>}', name: 'admin_teachers')]
+    public function teachersListAdmin(Admin $admin): Response
+    {   
+        $teachersList=$this->teacherRepository->findAll();
+        $teachersList=array_map(function($teacher){
+            return $teacher->toArray();
+        },$teachersList);
+        return $this->render('admin/teachersList.html.twig',
+            [
+                'admin' => $admin , 
+                'teachers' => $teachersList
+            ]);
+    }
+    #[Route('/absences/{id<\d+>}', name: 'admin_absences')]
+    public function absencesListAdmin(Admin $admin): Response
+    {   
+        $absencesList=$this->absenceRepository->findAll();
+        $UniqueCourseNames=$this->courseRepository->findUniqueCourseNames();
+        $absencesList=array_map(function($absence){
+            return $absence->toArray();
+        },$absencesList);
+        $absencesList=array_map(function($absence){
+            $temp=[ 'studentID'=> $absence["student"]["id"] ,
+                'studentname' => $absence["student"]["firstName"].' '.$absence["student"]["lastName"] ,
+                'coursename' => $absence["course"]["coursename"] ,
+                'absencedate' => $absence["absencedate"] 
+            ];
+            
+            return $temp  ;
+        },$absencesList);
+        return $this->render('admin/absencesList.html.twig',
+            [
+                'admin' => $admin , 
+                'absences' => $absencesList ,
+                'UniqueCourseNames' => $UniqueCourseNames
+            ]);
+    }
+
 
 
 
