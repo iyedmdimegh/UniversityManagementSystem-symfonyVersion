@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">{% block pageTitle %}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    {% block styles %}
+
+    {% endblock %}
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container-nav">
+            <div class="logo-uni-nav">
+                <a class="ucar" href="#"><img src="{{ asset('img/Admin_Teacher_Student/logo-ucar.png') }}"></a>
+                <a class="insat" href="#"><img src="{{ asset('img/Admin_Teacher_Student/logo-insat.png') }}"></a>
+                {% block spaceTitle %}
+
+                {% endblock %}
+            </div>
+            <div class="profile-nav">
+                {% block welcome %}
+                <p class="username-nav">Welcome, Foulen Fouleni</p>
+                {% endblock %}
+                <img class="profile-pic-nav" src="{{ asset('img/Admin_Teacher_Student/profile pic.png') }}">
+                <button class="btn btn-deconnect" type="submit"
+                        onclick="window.location.href = '../../form/form.php';">Log Out</button>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <!-- vertical nav bar -->
+        {% block verticalNav %}
+            <nav class="main-menu">
+                <h1 class="current-nav-element">Menu</h1>
+                <img class="logo" src="{{ asset('img/Admin_Teacher_Student/logo.png') }}" alt="logo" />
+                <ul>
+                    <li class="nav-item-vertical {% block firstNavElement %}{% endblock %}">
+                        <b></b>
+                        <b></b>
+                        <a href="{{ path("app_dashboard_teacher", {id: teacher.id}) }}">
+                            <span class="nav-text">Profile</span>
+                        </a>
+                    </li>
+                {% block restOfNavBar %}
+
+                {% endblock %}
+
+
+                </ul>
+            </nav>
+        {% endblock %}
+        <section class="content">
+            {% block content %}
+
+            {% endblock %}
+        </section>
+    </main>
+    {% block script %}
+    {% endblock %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+</body>
+
+</html>
