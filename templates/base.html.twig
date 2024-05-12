@@ -43,7 +43,7 @@
                     <li class="nav-item-vertical {% block firstNavElement %}{% endblock %}">
                         <b></b>
                         <b></b>
-                        <a href="{{ path("app_dashboard_teacher", {id: teacher.id}) }}">
+                        <a href="{% block profileLink %}{{ path("app_dashboard_teacher", {id: teacher.id}) }}{% endblock %}">
                             <span class="nav-text">Profile</span>
                         </a>
                     </li>

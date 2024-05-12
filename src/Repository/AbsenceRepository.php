@@ -16,6 +16,14 @@ class AbsenceRepository extends ServiceEntityRepository
         parent::__construct($registry, Absence::class);
     }
 
+    public function absencesStatistics(): array
+    {
+        $qb = $this->createQueryBuilder('a');
+        $qb->select('a.absencedate,count(a) AS nbAbsences')
+            ->groupBy('a.absencedate');
+        return $qb->getQuery()->getResult();
+
+    }
 //    /**
 //     * @return Absence[] Returns an array of Absence objects
 //     */

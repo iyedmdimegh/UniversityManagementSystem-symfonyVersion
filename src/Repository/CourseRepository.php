@@ -27,6 +27,15 @@ class CourseRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    //teachersPerCourse:
+    public function teachersStatistics(): array
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb->select('c.coursename,count(c.teacher) AS nbTeachers')
+            ->groupBy('c.coursename');
+        return $qb->getQuery()->getResult();
+
+    }
 //    /**
 //     * @return Course[] Returns an array of Course objects
 //     */
