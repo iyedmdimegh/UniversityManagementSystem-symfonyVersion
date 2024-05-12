@@ -18,6 +18,14 @@
 {% block firstNavElement %}{% endblock %}
 
 {% block restOfNavBar %}
+    <li class="nav-item-vertical {% block firstNavElement %}{% endblock %}">
+        <b></b>
+        <b></b>
+        <a href="{{ path("app_dashboard_teacher", {id: teacher.id}) }}">
+            <span class="nav-text">Profile</span>
+        </a>
+    </li>
+
     <li class="nav-item-vertical {% block secondNavElement %}{% endblock %}">
         <b></b>
         <b></b>

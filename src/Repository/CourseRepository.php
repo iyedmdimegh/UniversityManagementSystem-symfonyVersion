@@ -27,26 +27,20 @@ class CourseRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    //teachersPerCourse:
-    public function teachersStatistics(): array
-    {
-        $qb = $this->createQueryBuilder('c');
-        $qb->select('c.coursename,count(c.teacher) AS nbTeachers')
-            ->groupBy('c.coursename');
-        return $qb->getQuery()->getResult();
-
-    }
-
-    public function findUniqueCourseNames(): array
-    {
-        $qb = $this->createQueryBuilder('c');
-        $qb->select('c.coursename')
-            ->distinct(true);
-        $result = $qb->getQuery()->getResult();
-
-        $uniqueCourses = array_column($result, 'coursename');
-        return array_values(array_unique($uniqueCourses));
-    }
+//    /**
+//     * @return Course[] Returns an array of Course objects
+//     */
+//    public function findByExampleField($value): array
+//    {
+//        return $this->createQueryBuilder('c')
+//            ->andWhere('c.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('c.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//    }
 
 //    public function findOneBySomeField($value): ?Course
 //    {
@@ -57,4 +51,5 @@ class CourseRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 }

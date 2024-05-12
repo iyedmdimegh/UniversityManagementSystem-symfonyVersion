@@ -31,36 +31,17 @@ class StudentRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    // 'studentsPerYear':
-    public function statsStudentsPerYear(): array
+    public function findStudentById($id)
     {
         $qb = $this->createQueryBuilder('s');
 
-        $qb->select('s.studylevel,count(s.id) AS nbStudents ' )
-            ->groupBy('s.studylevel');
+        $qb->where('s.id = :id')
+            ->setParameter('id', $id);
 
-        return $qb->getQuery()->getResult();
-    }
-
-    //'studentsPerGender':
-    public function statsStudentsPerGender(): array
-    {
-        $qb = $this->createQueryBuilder('s');
-        $qb->select('s.gender,count(s.id) AS nbStudents')
-            ->groupBy('s.gender');
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getOneOrNullResult();
 
     }
 
-    //studentsPerField:
-    public function fieldStatistics(): array
-    {
-        $qb = $this->createQueryBuilder('s');
-        $qb->select('s.field,count(s) AS nbStudents')
-            ->groupBy('s.field');
-        return $qb->getQuery()->getResult();
-
-    }
 //    /**
 //     * @return StudentFixtures[] Returns an array of StudentFixtures objects
 //     */
@@ -85,4 +66,5 @@ class StudentRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 }
